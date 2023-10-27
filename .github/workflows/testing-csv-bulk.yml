@@ -26,7 +26,7 @@ jobs:
       - name: Get file content
         id: get_file_content
         run: |
-          git show ${{ github.sha }}:example.txt
+          git show ${{ github.sha }}:test.csv
         shell: bash
 
       - name: Display file content
