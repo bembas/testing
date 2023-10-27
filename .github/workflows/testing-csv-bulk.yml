@@ -29,5 +29,5 @@ jobs:
             FILE_CONTENT=$(git show ${{ github.sha }}:$file)
             ALL_CONTENT="$ALL_CONTENT\n$file:\n$FILE_CONTENT\n"
           done
-          echo "::set-output name=all_content::$ALL_CONTENT"
+          echo "$ALL_CONTENT"
         shell: bash
