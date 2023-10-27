@@ -16,7 +16,7 @@ jobs:
       - name: List changed files
         run: |
           # Get the list of committed files in the most recent push
-          COMMITTED_FILES=$(git diff --name-only ${{ github.sha }}^) >> $GITHUB_OUTPUT
+          echo "COMMITTED_FILES=$(git diff --name-only ${{ github.sha }}^)" >> $GITHUB_OUTPUT
           echo "Committed files: $COMMITTED_FILES"
         shell: bash
         id: list_commit_files
