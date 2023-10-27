@@ -24,6 +24,7 @@ jobs:
 
       - name: Get file content
         run: |
+          set -x  # Enable debugging to show the echo statements
           for file in $COMMITTED_FILES; do
             echo "Fetching content for $file"
             FILE_CONTENT=$(git show ${{ github.sha }}:$file)
@@ -34,6 +35,7 @@ jobs:
 
       - name: Display file contents
         run: |
+          set -x  # Enable debugging to show the echo statements
           # Loop through the array of committed file contents and display them
           for file_content in "${COMMITTED_FILE_CONTENTS[@]}"; do
             echo "File Content: $file_content"
