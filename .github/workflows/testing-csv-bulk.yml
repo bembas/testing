@@ -24,7 +24,7 @@ jobs:
       - name: Get file content
         run: |
           set -x  # Enable debugging to show the echo statements
-          echp ${{ steps.list_commit_files.outputs.COMMITTED_FILES }}
+          echo ${{ steps.list_commit_files.outputs.COMMITTED_FILES }}
           for file in ${{ steps.list_commit_files.outputs.COMMITTED_FILES }}; do
             echo "Fetching content for $file"
             FILE_CONTENT=$(git show ${{ github.sha }}:$file)
