@@ -15,18 +15,14 @@ jobs:
 
       - name: List changed files
         run: |
-          git diff --name-only ${{ github.event.before }} ${{ github.sha }}
+          COMMITTED_FILES=$(git diff --name-only HEAD~1 HEAD)
+          echo "Committed files: $COMMITTED_FILES"
         id: list_files
-
-      - name: Display changed files
-        run: |
-          echo "Changed files:"
-          echo "${{ steps.list_files.outputs.stdout }}"
 
       - name: Get file content
         id: get_file_content
         run: |
-          git show ${{ github.sha }}:${{ steps.list_files.outputs.stdout }}
+          git show ${{ github.sha }}:$COMMITTED_FILES
         shell: bash
 
       - name: Display file content
