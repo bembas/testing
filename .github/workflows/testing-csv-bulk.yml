@@ -23,12 +23,11 @@ jobs:
       - name: Get file content
         id: get_file_content
         run: |
+          ALL_CONTENT=""
           for file in $COMMITTED_FILES; do
             echo "Fetching content for $file"
-            git show ${{ github.sha }}:$file
+            FILE_CONTENT=$(git show ${{ github.sha }}:$file)
+            ALL_CONTENT="$ALL_CONTENT\n$file:\n$FILE_CONTENT\n"
           done
-          
-      - name: Display file content
-        run: |
-          echo "File content:"
-          echo "${{ steps.get_file_content.outputs.stdout }}"
+          echo "::set-output name=all_content::$ALL_CONTENT"
+        shell: bash
