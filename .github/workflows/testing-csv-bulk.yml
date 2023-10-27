@@ -18,8 +18,6 @@ jobs:
           # Get the list of committed files in the most recent push
           COMMITTED_FILES=$(git diff --name-only ${{ github.sha }}^)
           echo "Committed files: $COMMITTED_FILES"
-          # Initialize an environment variable with an empty array
-          export COMMITTED_FILE_CONTENTS=()
         shell: bash
 
       - name: Get file content
