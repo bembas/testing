@@ -15,7 +15,7 @@ jobs:
 
       - name: List changed files
         run: |
-          git diff --name-only main ${{ github.sha }}
+          git diff --name-only ${{ github.event.before }} ${{ github.sha }}
         id: list_files
 
       - name: Display changed files
@@ -26,7 +26,7 @@ jobs:
       - name: Get file content
         id: get_file_content
         run: |
-          git show ${{ github.sha }}:test.csv
+          git show ${{ github.sha }}:${{ steps.list_files.outputs.stdout }}
         shell: bash
 
       - name: Display file content
