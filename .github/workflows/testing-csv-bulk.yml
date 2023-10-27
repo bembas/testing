@@ -15,7 +15,11 @@ jobs:
 
       - name: List changed files
         run: |
-          COMMITTED_FILES=$(git diff --name-only HEAD~1 HEAD)
+          # Get the commit SHA of the most recent commit in the repository
+          LAST_COMMIT=$(git rev-parse HEAD)
+          
+          # Get the list of committed files in the most recent push
+          COMMITTED_FILES=$(git diff --name-only $LAST_COMMIT^..$LAST_COMMIT)
           echo "Committed files: $COMMITTED_FILES"
         id: list_files
 
