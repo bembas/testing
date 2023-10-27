@@ -1,0 +1,35 @@
+name: On Commit
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  on-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: List changed files
+        run: |
+          git diff --name-only ${{ github.event.before }} ${{ github.sha }}
+        id: list_files
+
+      - name: Display changed files
+        run: |
+          echo "Changed files:"
+          echo "${{ steps.list_files.outputs.stdout }}"
+
+      - name: Get file content
+        id: get_file_content
+        run: |
+          git show ${{ github.sha }}:example.txt
+        shell: bash
+
+      - name: Display file content
+        run: |
+          echo "File content:"
+          echo "${{ steps.get_file_content.outputs.stdout }}"
