@@ -18,16 +18,24 @@ jobs:
           # Get the list of committed files in the most recent push
           COMMITTED_FILES=$(git diff --name-only ${{ github.sha }}^)
           echo "Committed files: $COMMITTED_FILES"
-        id: list_files
+          # Initialize an environment variable with an empty array
+          export COMMITTED_FILE_CONTENTS=()
+        shell: bash
 
       - name: Get file content
-        id: get_file_content
         run: |
-          ALL_CONTENT=""
           for file in $COMMITTED_FILES; do
             echo "Fetching content for $file"
             FILE_CONTENT=$(git show ${{ github.sha }}:$file)
-            ALL_CONTENT="$ALL_CONTENT\n$file:\n$FILE_CONTENT\n"
+            # Append the content of each file to the array
+            COMMITTED_FILE_CONTENTS+=("$file:$FILE_CONTENT")
           done
-          echo "$ALL_CONTENT"
+        shell: bash
+
+      - name: Display file contents
+        run: |
+          # Loop through the array of committed file contents and display them
+          for file_content in "${COMMITTED_FILE_CONTENTS[@]}"; do
+            echo "File Content: $file_content"
+          done
         shell: bash
